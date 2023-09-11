@@ -411,8 +411,8 @@ if (enabledMods.includes("mods/generative_mods.js")) {
     elements["hydrofluoric_acid_gas"].reactions["pyrocumulus"]= { "elem1": null, "elem2":  "hydrofluoric_acid_cloud", "chance":0.4, "y":[0,12], "setting":"clouds" };
     elements["hydrofluoric_acid_gas"].reactions["fire_cloud"]= { "elem1": null, "elem2":  "hydrofluoric_acid_cloud", "chance":0.4, "y":[0,12], "setting":"clouds" };
     
-    elements["cloud"].reactions["anesthesia"] = { elem1:"acid_cloud", elem2:null, chance:0.05 };
-    elements["rain_cloud"].reactions["anesthesia"] = { elem1:"acid_cloud", elem2:null, chance:0.05 };
+    elements["cloud"].reactions["anesthesia"] = { elem1:"nitric_acid_cloud", elem2:null, chance:0.05 };
+    elements["rain_cloud"].reactions["anesthesia"] = { elem1:"nitric_acid_cloud", elem2:null, chance:0.05 };
     
 }
 function createAcid(name,reactions, gasReactions, color, category, categoryGas, tempHigh, tempLowGas, tempLow, tempHighGas, density, densityGas)
@@ -462,6 +462,7 @@ function createAcid(name,reactions, gasReactions, color, category, categoryGas, 
     if (enabledMods.includes("mods/generative_mods.js")) {
         runAfterLoad(function() {
             generateCloud(name);
+			console.log(name);
         });
         elements[name+"_gas"].reactions[name+"_gas"]= { "elem1": null, "elem2": name + "_cloud", "chance":0.3, "y":[0,12], "setting":"clouds" };
         elements[name+"_gas"].reactions["rain_cloud"]= { "elem1": null, "elem2":  name + "_cloud", "chance":0.4, "y":[0,12], "setting":"clouds" };
@@ -1903,8 +1904,10 @@ trueAcids.push("hexafluorosilicic_acid");
 trueAcidGases.push("hexafluorosilicic_acid_gas");
 
 
-elements.hydrofluoric_acid.ignore.push("sand","hexafluorosilicic_acid","hexafluorosilicic_acid_gas","potassium_carbonate","potassium_fluoride");
-elements.hydrofluoric_acid_gas.ignore.push("sand","hexafluorosilicic_acid","hexafluorosilicic_acid_gas","potassium_carbonate","potassium_fluoride");
+elements.hydrofluoric_acid.ignore.push("sand","hexafluorosilicic_acid","hexafluorosilicic_acid_gas","potassium_carbonate","potassium_fluoride","carbon_dioxide","hydrogen");
+elements.hydrofluoric_acid_gas.ignore.push("sand","hexafluorosilicic_acid","hexafluorosilicic_acid_gas","potassium_carbonate","potassium_fluoride","carbon_dioxide","hydrogen");
+elements.hydrogen_fluoride.ignore.push("sand","hexafluorosilicic_acid","hexafluorosilicic_acid_gas","potassium_carbonate","potassium_fluoride","carbon_dioxide","hydrogen");
+elements.liquid_hydrogen_fluoride.ignore.push("sand","hexafluorosilicic_acid","hexafluorosilicic_acid_gas","potassium_carbonate","potassium_fluoride","carbon_dioxide","hydrogen");
 elements.hexafluorosilicic_acid.ignore.push("sand");
 elements.hexafluorosilicic_acid_gas.ignore.push("sand");
 
@@ -1912,8 +1915,13 @@ elements.hydrofluoric_acid.reactions.sand = { elem1:"hexafluorosilicic_acid", el
 elements.hydrofluoric_acid_gas.reactions.sand = { elem1:"hexafluorosilicic_acid", elem2: null};
 elements.hydrofluoric_acid.reactions.potassium_carbonate = { elem1:"potassium_fluoride", elem2: "carbon_dioxide"};
 elements.hydrofluoric_acid_gas.reactions.potassium_carbonate = { elem1:"potassium_fluoride", elem2: "carbon_dioxide"};
+elements.hydrogen_fluoride.reactions.potassium_carbonate = { elem1:"potassium_fluoride", elem2: "carbon_dioxide"};
+elements.liquid_hydrogen_fluoride.reactions.potassium_carbonate = { elem1:"potassium_fluoride", elem2: "carbon_dioxide"};
 elements.hydrofluoric_acid.reactions.potassium_fluoride = { elem1:["hydrogen","fluorine"], elem2: "potassium_fluoride"};
 elements.hydrofluoric_acid_gas.reactions.potassium_fluoride = { elem1:["hydrogen","fluorine"], elem2: "potassium_fluoride"};
+
+elements.fluorine.ignore.push("sand","potassium_fluoride","carbon_dioxide");
+elements.liquid_fluorine.ignore.push("sand","potassium_fluoride","carbon_dioxide");
 
 elements.potassium_carbonate = {
     color: "#e2e1e8",
@@ -2190,9 +2198,11 @@ elements.molten_iodine = {
     behavior: behaviors.LIQUID,
     tempHigh: 184,
     tempLow: 113,
+    temp: 123,
     stateHigh: "iodine_gas",
     stateLow: "iodine",
     state: "liquid",
+    hidden: true,
 };
 
 elements.iodine_gas = {
@@ -2314,7 +2324,6 @@ elements.bless.reactions["hydrogen_fluoride"] = {elem2: "hydrogen"};
 elements.bless.reactions["liquid_hydrogen_fluoride"] = {elem2: "hydrogen"};
 elements.bless.reactions["hydrogen_fluoride_ice"] = {elem2: "hydrogen"};
 elements.bless.reactions["hydrofluoric_acid"] = {elem2: "hydrogen"};
-elements.bless.reactions["liquid_hydrofluoric_acid"] = {elem2: "hydrogen"};
 elements.bless.reactions["hydrofluoric_acid_ice"] = {elem2: "hydrogen"};
 elements.bless.reactions["francium"] = {elem2: null};
 elements.bless.reactions["molten_francium"] = {elem2: null};
